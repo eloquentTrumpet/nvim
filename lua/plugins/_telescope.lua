@@ -7,22 +7,16 @@ local M = {
     'nvim-lua/plenary.nvim',
     -- Key bindings
     'folke/which-key.nvim',
-    'nvim-treesitter/nvim-treesitter',
   },
-  lazy = false,
+  -- lazy = false,
   config = function()
-    -- require('nvim-treesitter.configs').setup {
-    --   highlight = {
-    --     enable = true,
-    --   },
-    -- }
     local telescope = require('telescope')
     local actions = require('telescope.actions')
     local builtin = require('telescope.builtin')
 
-    local function telescope_buffer_dir()
-      return vim.fn.expand('%:p:h')
-    end
+    -- local function telescope_buffer_dir()
+    --   return vim.fn.expand('%:p:h')
+    -- end
 
     telescope.setup {
       defaults = {
@@ -47,6 +41,7 @@ local M = {
         [';'] = { builtin.resume, prefix .. 'resume' },
         ['e'] = { builtin.diagnostics, prefix .. 'diagnostics' },
         ['b'] = { builtin.buffers, prefix .. 'buffers' },
+        ['B'] = { builtin.builtin, prefix .. 'builtin' },
         ['i'] = { builtin.lsp_incoming_calls, prefix .. 'lsp_incoming_calls' },
         ['o'] = { builtin.lsp_outgoing_calls, prefix .. 'lsp_outgoing_calls' },
         ['d'] = { builtin.lsp_definitions, prefix .. 'lsp_definitions' },
@@ -55,10 +50,10 @@ local M = {
         ['g'] = { builtin.lsp_implementations, prefix .. 'lsp_implementations' },
         ['c'] = { actions.delete_buffer, prefix .. 'delete_buffer'}
       },
-      ['s'] = {
-        name = 'telescope file_browser',
-        ['f'] = { file_browser, prefix .. 'file_browser'}
-      }
+      -- ['s'] = {
+      --   name = 'telescope file_browser',
+      --   ['f'] = { file_browser, prefix .. 'file_browser'}
+      -- }
     })
   end,
 }

@@ -2,7 +2,7 @@
 
 local M = {
   'jose-elias-alvarez/null-ls.nvim',
-  lazy = false,
+  -- lazy = false,
   config = function()
     require('null-ls').setup({
       on_attach = function(client, bufnr)

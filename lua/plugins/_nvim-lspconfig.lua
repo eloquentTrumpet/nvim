@@ -14,26 +14,42 @@ local M = {
     'hrsh7th/cmp-vsnip',
     'hrsh7th/vim-vsnip',
   },
-  lazy = false,
+  -- lazy = false,
   config = function()
     -- Setup language servers.
     local lspconfig = require('lspconfig')
     -- The nvim-cmp almost supports LSP's capabilities so You should advertise it to LSP servers..
-    local capabilities = require('cmp_nvim_lsp').default_capabilities()
+    local cmp_nvim_lsp_capabilities = require('cmp_nvim_lsp').default_capabilities()
 
     -- typescript-language-server
     lspconfig.tsserver.setup {
-      capabilities = capabilities,
+      capabilities = cmp_nvim_lsp_capabilities,
     }
 
     -- vscode-eslint-language-server (hrsh7th/vscode-langservers-extracted)
     lspconfig.eslint.setup {
-      capabilities = capabilities,
+      capabilities = cmp_nvim_lsp_capabilities,
+    }
+
+    -- css-languageserver (hrsh7th/vscode-langservers-extracted)
+    lspconfig.cssls.setup {
+      capabilities = cmp_nvim_lsp_capabilities,
+    }
+
+    -- cssmodules_ls 
+    -- npm install --global cssmodules-language-server
+    lspconfig.cssmodules_ls.setup {
+      capabilities = cmp_nvim_lsp_capabilities,
+      on_attach = function (client)
+        -- avoid accepting `definitionProvider` responses from this LSP
+        client.server_capabilities.definitionProvider = false
+        -- custom_on_attach(client)
+      end,
     }
 
     -- luals/lua-language-server
     lspconfig.lua_ls.setup {
-      capabilities = capabilities,
+      capabilities = cmp_nvim_lsp_capabilities,
       on_init = function(client)
         local path = client.workspace_folders[1].name
         if not vim.loop.fs_stat(path..'/.luarc.json') and not vim.loop.fs_stat(path..'/.luarc.jsonc') then
@@ -64,22 +80,9 @@ local M = {
       end
     }
 
-    -- css-languageserver (hrsh7th/vscode-langservers-extracted)
-    lspconfig.cssls.setup {
-      capabilities = capabilities
-    }
-
-    lspconfig.cssmodules_ls.setup {
-      on_attach = function (client)
-        -- avoid accepting `definitionProvider` responses from this LSP
-        client.server_capabilities.definitionProvider = false
-        -- custom_on_attach(client)
-      end,
-    }
-
     -- cmp
     local cmp = require('cmp')
-    require('lspkind')
+    -- require('lspkind')
     cmp.setup({
       -- formatting = {
       --   format = lspkind.cmp_format({
