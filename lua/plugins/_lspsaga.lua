@@ -188,13 +188,6 @@ local M = {
     keymap('n', ']E', function()
       require('lspsaga.diagnostic'):goto_next({ severity = vim.diagnostic.severity.ERROR })
     end)
-    -- Hover Doc
-    -- If there is no hover doc,
-    -- there will be a notification stating that
-    -- there is no information available.
-    -- To disable it just use ":Lspsaga hover_doc ++quiet"
-    -- Pressing the key twice will enter the hover window
-    keymap('n', 'K', '<cmd>Lspsaga hover_doc<CR>')
 
     local divider = ' : ';
     local lspsaga = 'Lspsaga';
@@ -208,6 +201,10 @@ local M = {
     end
 
     local wk = require('which-key')
+
+    wk.register({
+      ['K'] = { cmd('Lspsaga hover_doc'), lspsaga .. divider .. 'hover_doc' },
+    })
 
     wk.register({
       ['g'] = {

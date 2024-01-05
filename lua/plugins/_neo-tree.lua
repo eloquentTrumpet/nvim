@@ -14,12 +14,18 @@ local M = {
   },
   config = function()
     local wk = require('which-key')
-    local prefix = 'neo-tree : ';
+    local prefix = 'neo-tree   ';
+
+    local cmd = function(cmd)
+      return '<cmd>' .. cmd .. '<CR>';
+    end
+
     wk.register({
-      t = { '<CMD>Neotree left toggle<CR>', prefix .. "Neo-tree left" },  -- create a binding with label
-      f = { '<CMD>Neotree float toggle<CR>', prefix .. "Neo-tree float" }, -- additional options for creating the keymap
+      t = { cmd('Neotree left toggle'), prefix .. "Neo-tree left" },  -- create a binding with label
+      f = { cmd('Neotree float toggle'), prefix .. "Neo-tree float" }, -- additional options for creating the keymap
     }, { prefix = "<leader>" })
   end,
 }
+
 
 return { M }

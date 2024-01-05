@@ -5,7 +5,7 @@ vim.opt.encoding = 'utf-8';
 vim.opt.fileencoding = 'utf-8';
 
 vim.opt.list = true
-vim.opt.listchars = { 
+vim.opt.listchars = {
   eol = '↵',
   space = '·',
   tab = '│·',
@@ -13,9 +13,6 @@ vim.opt.listchars = {
   extends = '◀',
   precedes = '▶'
 }
-
--- Set colorscheme
--- vim.cmd.colorscheme('tokyonight')
 
 vim.opt.backup = false;
 vim.opt.showcmd = true;

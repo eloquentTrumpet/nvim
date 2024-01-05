@@ -15,7 +15,7 @@ local M = {
     vim.keymap.set('n', 'ﬁ', ':MoveHChar(1)<CR>', opts) -- vim.keymap.set('n', '<A-l>', ':MoveHChar(1)<CR>', opts)
     vim.keymap.set('n', '<leader>wf', ':MoveWord(1)<CR>', opts) -- vim.keymap.set('n', '<leader>wf', ':MoveWord(1)<CR>', opts)
     vim.keymap.set('n', '<leader>wb', ':MoveWord(-1)<CR>', opts) -- vim.keymap.set('n', '<leader>wb', ':MoveWord(-1)<CR>', opts)
-    
+
     -- Visual-mode commands
     vim.keymap.set('v', '√', ':MoveBlock(1)<CR>', opts) -- vim.keymap.set('v', '<A-j>', ':MoveBlock(1)<CR>', opts)
     vim.keymap.set('v', 'ª', ':MoveBlock(-1)<CR>', opts) -- vim.keymap.set('v', '<A-k>', ':MoveBlock(-1)<CR>', opts)

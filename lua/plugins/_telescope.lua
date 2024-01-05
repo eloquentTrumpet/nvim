@@ -32,7 +32,7 @@ local M = {
 
     -- which-key
     local wk = require('which-key')
-    local prefix = 'telescope : '
+    local prefix = 'tlscp   '
     wk.register({
       [';'] = {
         name = 'telescope',
