@@ -21,8 +21,11 @@ local M = {
     end
 
     wk.register({
-      t = { cmd('Neotree left toggle'), prefix .. "Neo-tree left" },  -- create a binding with label
-      f = { cmd('Neotree float toggle'), prefix .. "Neo-tree float" }, -- additional options for creating the keymap
+     ['t'] = {
+        name = 'neo-tree',
+        ['t'] = { cmd('Neotree toggle left'), prefix .. "Neo-tree left" },
+        ['f'] = { cmd('Neotree toggle float'), prefix .. "Neo-tree float" },
+      }
     }, { prefix = "<leader>" })
   end,
 }
