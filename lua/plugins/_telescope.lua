@@ -5,6 +5,8 @@ local M = {
   -- or                          , branch = '0.1.x',
   dependencies = {
     'nvim-lua/plenary.nvim',
+    'nvim-telescope/telescope-file-browser.nvim',
+    'nvim-tree/nvim-web-devicons',
     -- Key bindings
     'folke/which-key.nvim',
   },
@@ -13,10 +15,6 @@ local M = {
     local telescope = require('telescope')
     local actions = require('telescope.actions')
     local builtin = require('telescope.builtin')
-
-    -- local function telescope_buffer_dir()
-    --   return vim.fn.expand('%:p:h')
-    -- end
 
     telescope.setup {
       defaults = {
@@ -30,6 +28,10 @@ local M = {
       },
     }
 
+    -- To get telescope-file-browser loaded and working with telescope,
+    -- you need to call load_extension, somewhere after setup function:
+    telescope.load_extension('file_browser')
+
     -- which-key
     local wk = require('which-key')
     local prefix = 'tlscp   '
@@ -37,6 +39,7 @@ local M = {
       [';'] = {
         name = 'telescope',
         ['f'] = { builtin.find_files, prefix .. 'find_files' },
+        ['F'] = { telescope.extensions.file_browser.file_browser, prefix .. 'file_browser' },
         ['r'] = { builtin.live_grep, prefix .. 'live_grep' },
         [';'] = { builtin.resume, prefix .. 'resume' },
         ['e'] = { builtin.diagnostics, prefix .. 'diagnostics' },
@@ -50,10 +53,6 @@ local M = {
         ['g'] = { builtin.lsp_implementations, prefix .. 'lsp_implementations' },
         ['c'] = { actions.delete_buffer, prefix .. 'delete_buffer'}
       },
-      -- ['s'] = {
-      --   name = 'telescope file_browser',
-      --   ['f'] = { file_browser, prefix .. 'file_browser'}
-      -- }
     })
   end,
 }
