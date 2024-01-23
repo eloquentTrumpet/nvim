@@ -22,7 +22,7 @@ local M = {
         mappings = {
           ['n'] = {
             ['q'] = actions.close,
-            ['c'] = actions.delete_buffer
+            ['D'] = actions.delete_buffer
           },
         },
       },
