@@ -6,24 +6,9 @@ local M = {
 		-- Provides the Format, FormatWrite, FormatLock, and FormatWriteLock commands
 		require("formatter").setup({
 			filetype = {
-				lua = {
-					require("formatter.filetypes.lua").prettier,
-				},
-				typescript = {
-					require("formatter.filetypes.typescript").prettier,
-				},
-				typescriptreact = {
-					require("formatter.filetypes.typescriptreact").prettier,
-				},
-				javascript = {
-					require("formatter.filetypes.javascript").prettier,
-				},
-				javascriptreact = {
-					require("formatter.filetypes.javascriptreact").prettier,
-				},
-        html = {
-          require("formatter.filetypes.html").prettier,
-        }
+        ["*"] = {
+          require("formatter.defaults").prettier
+        },
 			},
 		})
 
