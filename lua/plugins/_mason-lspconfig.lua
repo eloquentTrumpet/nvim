@@ -34,8 +34,13 @@ local M = {
 		-- The nvim-cmp almost supports LSP's capabilities so You should advertise it to LSP servers..
 		local cmp_nvim_lsp_capabilities = require("cmp_nvim_lsp").default_capabilities()
 
+		local workspace_diagnostics = require("workspace-diagnostics")
+
 		-- typescript-language-server
 		lspconfig.tsserver.setup({
+			on_attach = function(client, bufnr)
+				workspace_diagnostics.populate_workspace_diagnostics(client, bufnr)
+			end,
 			capabilities = cmp_nvim_lsp_capabilities,
 		})
 
