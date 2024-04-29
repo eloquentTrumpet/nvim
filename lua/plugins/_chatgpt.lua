@@ -1,5 +1,6 @@
--- ChatGPT
+require("_common")
 
+-- ChatGPT
 local M = {
 	"jackMort/ChatGPT.nvim",
 	event = "VeryLazy",
@@ -20,27 +21,41 @@ local M = {
 			-- azure_api_version_cmd = "echo 2023-05-15",
 		})
 
+		-- which-key
+		local name = "ChatGPT"
+		local ChatGPTEditWithInstruction = "ChatGPTEditWithInstruction"
+		local grammar_correction = "grammar_correction"
+		local translate = "translate"
+		local keywords = "keywords"
+		local docstring = "docstring"
+		local addTests = "add_tests"
+		local optimizeCode = "optimize_code"
+		local summerize = "summerize"
+		local fixBugs = "fix_bugs"
+		local explainCode = "explain_code"
+		local roxygenEdit = "roxygen_edit"
+		local code_readability_analysis = "code_readability_analysis"
+		local chatGPTRun = CMD_FUNC("ChatGPTRun")
+		local label = LABEL(name)
 		local wk = require("which-key")
 		wk.register({
-			c = {
-				name = "ChatGPT",
-				c = { "<cmd>ChatGPT<CR>", "ChatGPT" },
-				e = { "<cmd>ChatGPTEditWithInstruction<CR>", "Edit with instruction", mode = { "n", "v" } },
-				g = { "<cmd>ChatGPTRun grammar_correction<CR>", "Grammar Correction", mode = { "n", "v" } },
-				t = { "<cmd>ChatGPTRun translate<CR>", "Translate", mode = { "n", "v" } },
-				k = { "<cmd>ChatGPTRun keywords<CR>", "Keywords", mode = { "n", "v" } },
-				d = { "<cmd>ChatGPTRun docstring<CR>", "Docstring", mode = { "n", "v" } },
-				a = { "<cmd>ChatGPTRun add_tests<CR>", "Add Tests", mode = { "n", "v" } },
-				o = { "<cmd>ChatGPTRun optimize_code<CR>", "Optimize Code", mode = { "n", "v" } },
-				s = { "<cmd>ChatGPTRun summarize<CR>", "Summarize", mode = { "n", "v" } },
-				f = { "<cmd>ChatGPTRun fix_bugs<CR>", "Fix Bugs", mode = { "n", "v" } },
-				x = { "<cmd>ChatGPTRun explain_code<CR>", "Explain Code", mode = { "n", "v" } },
-				r = { "<cmd>ChatGPTRun roxygen_edit<CR>", "Roxygen Edit", mode = { "n", "v" } },
-				l = {
-					"<cmd>ChatGPTRun code_readability_analysis<CR>",
-					"Code Readability Analysis",
-					mode = { "n", "v" },
-				},
+			name = name,
+			["g"] = {
+				name = name,
+				mode = { "n", "v" },
+				["c"] = { CMD(name), label(name) },
+				["e"] = { CMD(ChatGPTEditWithInstruction), label(ChatGPTEditWithInstruction), mode = { "n", "v" } },
+				["g"] = { chatGPTRun(grammar_correction), label(grammar_correction), mode = { "n", "v" } },
+				["t"] = { chatGPTRun(translate), label(translate), mode = { "n", "v" } },
+				["k"] = { chatGPTRun(keywords), label(keywords), mode = { "n", "v" } },
+				["d"] = { chatGPTRun(docstring), label(docstring), mode = { "n", "v" } },
+				["a"] = { chatGPTRun(addTests), label(addTests), mode = { "n", "v" } },
+				["o"] = { chatGPTRun(optimizeCode), label(optimizeCode), mode = { "n", "v" } },
+				["s"] = { chatGPTRun(summerize), label(summerize), mode = { "n", "v" } },
+				["f"] = { chatGPTRun(fixBugs), label(fixBugs), mode = { "n", "v" } },
+				["x"] = { chatGPTRun(explainCode), label(explainCode), mode = { "n", "v" } },
+				["r"] = { chatGPTRun(roxygenEdit), label(roxygenEdit), mode = { "n", "v" } },
+				["l"] = { chatGPTRun(code_readability_analysis), label(code_readability_analysis), mode = { "n", "v" } },
 			},
 		}, { prefix = "<leader>" })
 	end,

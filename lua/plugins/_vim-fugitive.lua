@@ -1,24 +1,30 @@
--- fugitive
+require("_common")
 
+-- fugitive
 local M = {
-  'tpope/vim-fugitive',
-  dependencies = {
-    -- Key bindings
-    'folke/which-key.nvim',
-  },
-  config = function()
-    -- which-key
-    local wk = require('which-key')
-    local prefix = 'fugitive -> '
-    wk.register({
-      g = {
-        name = 'fugitive (Git)',                   -- optional group name
-        b = { '<CMD>Git blame<CR>', prefix .. 'Git blame' }, -- create a binding with label
-        d = { '<CMD>Git blame<CR>', prefix .. 'Git diff' },   -- create a binding with label
-        l = { '<CMD>Git blame<CR>', prefix .. 'Git log' },     -- create a binding with label
-      },
-    }, { prefix = '<leader>' })
-  end,
+	"tpope/vim-fugitive",
+	dependencies = {
+		-- Key bindings
+		"folke/which-key.nvim",
+	},
+	config = function()
+		-- which-key
+		local name = "fugitive"
+		local gitBlame = "Git blame"
+		local gitDiff = "Git diff"
+		local gitLog = "Git log"
+		local label = LABEL(name)
+		local wk = require("which-key")
+		wk.register({
+			name = name,
+			["f"] = {
+				name = name,
+				["b"] = { CMD(gitBlame), label(gitBlame) },
+				["d"] = { CMD(gitDiff), label(gitDiff) },
+				["l"] = { CMD(gitLog), label(gitLog) },
+			},
+		}, { prefix = "<leader>" })
+	end,
 }
 
 return { M }

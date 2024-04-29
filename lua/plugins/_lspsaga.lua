@@ -1,3 +1,5 @@
+require("_common")
+
 -- lspsaga
 local default_config = {
 	ui = {
@@ -189,89 +191,67 @@ local M = {
 			require("lspsaga.diagnostic"):goto_next({ severity = vim.diagnostic.severity.ERROR })
 		end)
 
-		local divider = " : "
-		local lspsaga = "Lspsaga"
-		local finder = "finder"
-		local diagnostics = "Diagnostics"
-		local outline = "Outline"
-		local callhierarchy = "Callhierarchy"
-
-		local cmd = function(cmd)
-			return "<cmd>" .. cmd .. "<CR>"
-		end
-
+		-- which-key
+		local name = "Lspsaga"
+		local finderImp = "finder imp"
+		local finderRef = "finder ref"
+		local code_action = "code_action"
+		local rename = "rename"
+		local rename_project = "rename ++project"
+		local peek_definition = "peek_definition"
+		local goto_definition = "goto_definition"
+		local peek_type_definition = "peek_type_definition"
+		local goto_type_definition = "goto_type_definition"
+		local hover_doc = "hover_doc"
+		local outline = "outline"
+		local incoming_calls = "incoming_calls"
+		local outgoing_calls = "outgoing_calls"
+		local lspSaga = CMD_FUNC(name)
+		local label = LABEL(name)
 		local wk = require("which-key")
-
 		wk.register({
-			["K"] = { cmd("Lspsaga hover_doc"), lspsaga .. divider .. "hover_doc" },
-		})
-
-		wk.register({
-			["g"] = {
-				name = lspsaga,
-				-- keymap("n", "gh", "<cmd>Lspsaga lsp_finder<CR>")
-				["h"] = { cmd("Lspsaga finder"), lspsaga .. divider .. "finder" },
+			[","] = {
+				name = name,
+				["h"] = { lspSaga("finder"), label("finder") },
 				["H"] = {
-					name = lspsaga .. divider .. finder,
-					["i"] = { cmd("Lspsaga finder imp"), lspsaga .. divider .. finder .. divider .. "implementation" },
-					["r"] = { cmd("Lspsaga finder ref"), lspsaga .. divider .. finder .. divider .. "references" },
+					name = label("finder"),
+					["i"] = { lspSaga(finderImp), label(finderImp) },
+					["r"] = { lspSaga(finderRef), label(finderRef) },
 				},
-				-- keymap({"n","v"}, "<leader>ca", "<cmd>Lspsaga code_action<CR>")
-				["a"] = { cmd("Lspsaga code_action"), lspsaga .. divider .. "code_action" },
-				-- keymap("n", "gr", "<cmd>Lspsaga rename<CR>")
-				["r"] = { cmd("Lspsaga rename"), lspsaga .. divider .. "rename" },
-				-- keymap("n", "gr", "<cmd>Lspsaga rename ++project<CR>")
-				["R"] = { cmd("Lspsaga rename ++project"), lspsaga .. divider .. "rename ++project" },
-				-- keymap("n", "gp", "<cmd>Lspsaga peek_definition<CR>")
-				["p"] = { cmd("Lspsaga peek_definition"), lspsaga .. divider .. "peek_definition" },
-				-- keymap("n","gd", "<cmd>Lspsaga goto_definition<CR>")
-				["d"] = { cmd("Lspsaga goto_definition"), lspsaga .. divider .. "goto_definition" },
-				-- keymap("n", "gt", "<cmd>Lspsaga peek_type_definition<CR>")
-				["t"] = { cmd("Lspsaga peek_type_definition"), lspsaga .. divider .. "peek_type_definition" },
-				-- keymap("n","gt", "<cmd>Lspsaga goto_type_definition<CR>")
-				["T"] = { cmd("Lspsaga goto_type_definition"), lspsaga .. divider .. "goto_type_definition" },
+				["a"] = { lspSaga(code_action), label(code_action) },
+				["r"] = { lspSaga(rename), label(rename) },
+				["R"] = { lspSaga(rename_project), label(rename_project) },
+				["p"] = { lspSaga(peek_definition), label(peek_definition) },
+				["d"] = { lspSaga(goto_definition), label(goto_definition) },
+				["t"] = { lspSaga(peek_type_definition), label(peek_type_definition) },
+				["T"] = { lspSaga(goto_type_definition), label(goto_type_definition) },
+				["K"] = { lspSaga(hover_doc), label(hover_doc) },
+				["o"] = { lspSaga(outline), label(outline) },
+				["c"] = {
+					name = label("Callhierarchy"),
+					["i"] = { lspSaga(incoming_calls), label(incoming_calls) },
+					["o"] = { lspSaga(outgoing_calls), label(outgoing_calls) },
+				},
 			},
+			-- },
 		})
 
+		local show_line_diagnostics = "show_line_diagnostics"
+		local show_buf_diagnostics = "show_buf_diagnostics"
+		local show_workspace_diagnostics = "show_workspace_diagnostics"
+		local show_cursor_diagnostics = "show_cursor_diagnostics"
+		local diagnostic_jump_prev = "diagnostic_jump_prev"
+		local diagnostic_jump_next = "diagnostic_jump_next"
 		wk.register({
 			["s"] = {
-				name = lspsaga .. divider .. diagnostics,
-				-- keymap("n", "<leader>sl", "<cmd>Lspsaga show_line_diagnostics<CR>")
-				["l"] = { cmd("Lspsaga show_line_diagnostics"), diagnostics .. divider .. "show_line_diagnostics" },
-				-- keymap("n", "<leader>sb", "<cmd>Lspsaga show_buf_diagnostics<CR>")
-				["b"] = { cmd("Lspsaga show_buf_diagnostics"), diagnostics .. divider .. "show_buf_diagnostics" },
-				-- keymap("n", "<leader>sw", "<cmd>Lspsaga show_workspace_diagnostics<CR>")
-				["w"] = {
-					cmd("Lspsaga show_workspace_diagnostics"),
-					diagnostics .. divider .. "show_workspace_diagnostics",
-				},
-				-- keymap("n", "<leader>sc", "<cmd>Lspsaga show_cursor_diagnostics<CR>")
-				["c"] = { cmd("Lspsaga show_cursor_diagnostics"), diagnostics .. divider .. "show_cursor_diagnostics" },
+				name = label("Diagnostics"),
+				["l"] = { lspSaga(show_line_diagnostics), label(show_line_diagnostics) },
+				["b"] = { lspSaga(show_buf_diagnostics), label(show_buf_diagnostics) },
+				["w"] = { lspSaga(show_workspace_diagnostics), label(show_workspace_diagnostics) },
+				["c"] = { lspSaga(show_cursor_diagnostics), label(show_cursor_diagnostics) },
 			},
-			-- keymap("n", "[e", "<cmd>Lspsaga diagnostic_jump_prev<CR>")
-			["[e"] = { cmd("Lspsaga diagnostic_jump_prev"), diagnostics .. divider .. "diagnostic_jump_prev" },
-			-- keymap("n", "]e", "<cmd>Lspsaga diagnostic_jump_next<CR>")
-			["e]"] = { cmd("Lspsaga diagnostic_jump_next"), diagnostics .. divider .. "diagnostic_jump_next" },
-		})
-
-		wk.register({
-			-- keymap("n","<leader>o", "<cmd>Lspsaga outline<CR>")
-			["<leader>"] = {
-				["o"] = { cmd("Lspsaga outline"), lspsaga .. divider .. outline },
-				name = lspsaga .. divider .. outline,
-			},
-		})
-
-		wk.register({
-			["<leader>"] = {
-				["c"] = {
-					name = lspsaga .. divider .. callhierarchy,
-					-- keymap("n", "<Leader>ci", "<cmd>Lspsaga incoming_calls<CR>")
-					["i"] = { cmd("Lspsaga incoming_calls"), callhierarchy .. divider .. "incoming_calls" },
-					-- keymap("n", "<Leader>co", "<cmd>Lspsaga outgoing_calls<CR>")
-					["o"] = { cmd("Lspsaga outgoing_calls"), callhierarchy .. divider .. "outgoing_calls" },
-				},
-			},
+			["[e"] = { lspSaga(diagnostic_jump_prev), label(diagnostic_jump_prev) },
+			["e]"] = { lspSaga(diagnostic_jump_next), label(diagnostic_jump_next) },
 		})
 	end,
 }

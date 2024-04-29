@@ -1,5 +1,6 @@
--- windows.nvim
+require("_common")
 
+-- windows.nvi m
 local M = {
 	"anuvyklack/windows.nvim",
 	dependencies = {
@@ -11,15 +12,21 @@ local M = {
 				enable = false,
 			},
 		})
-
-		local function cmd(command)
-			return table.concat({ "<Cmd>", command, "<CR>" })
-		end
-
-		vim.keymap.set("n", "<C-w>z", cmd("WindowsMaximize"))
-		vim.keymap.set("n", "<C-w>_", cmd("WindowsMaximizeVertically"))
-		vim.keymap.set("n", "<C-w>|", cmd("WindowsMaximizeHorizontally"))
-		vim.keymap.set("n", "<C-w>=", cmd("WindowsEqualize"))
+		-- which-key
+		local name = "Windows"
+		local windowsMaximize = "WindowsMaximize"
+		local windowsMaximizeVertically = "WindowsMaximizeVertically"
+		local windowsMaximizeHorizontally = "WindowsMaximizeHorizontally"
+		local windowsEqualize = "WindowsEqualize"
+		local label = LABEL(name)
+		local wk = require("which-key")
+		wk.register({
+			name = name,
+			["z"] = { CMD(windowsMaximize), label(windowsMaximize) },
+			["_"] = { CMD(windowsMaximizeVertically), label(windowsMaximizeVertically) },
+			["|"] = { CMD(windowsMaximizeHorizontally), label(windowsMaximizeHorizontally) },
+			["="] = { CMD(windowsEqualize), label(windowsEqualize) },
+		}, { prefix = "<C-w>" })
 	end,
 }
 

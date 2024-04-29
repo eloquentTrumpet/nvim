@@ -1,5 +1,6 @@
--- telescope
+require("_common")
 
+-- telescope
 local M = {
 	"nvim-telescope/telescope.nvim",
 	tag = "0.1.4",
@@ -37,25 +38,27 @@ local M = {
 		telescope.load_extension("undo")
 
 		-- which-key
+		local name = "telescope"
+		local label = LABEL(name)
 		local wk = require("which-key")
-		local prefix = "tlscp   "
 		wk.register({
+			name = name,
 			[";"] = {
 				name = "telescope",
-				["f"] = { builtin.find_files, prefix .. "find_files" },
-				["F"] = { telescope.extensions.file_browser.file_browser, prefix .. "file_browser" },
-				["r"] = { builtin.live_grep, prefix .. "live_grep" },
-				[";"] = { builtin.resume, prefix .. "resume" },
-				["e"] = { builtin.diagnostics, prefix .. "diagnostics" },
-				["b"] = { builtin.buffers, prefix .. "buffers" },
-				["B"] = { builtin.builtin, prefix .. "builtin" },
-				["i"] = { builtin.lsp_incoming_calls, prefix .. "lsp_incoming_calls" },
-				["o"] = { builtin.lsp_outgoing_calls, prefix .. "lsp_outgoing_calls" },
-				["d"] = { builtin.lsp_definitions, prefix .. "lsp_definitions" },
-				["k"] = { builtin.lsp_references, prefix .. "lsp_references" },
-				["t"] = { builtin.lsp_type_definitions, prefix .. "lsp_type_definitions" },
-				["g"] = { builtin.lsp_implementations, prefix .. "lsp_implementations" },
-				["c"] = { actions.delete_buffer, prefix .. "delete_buffer" },
+				["f"] = { builtin.find_files, label("find_files") },
+				["F"] = { telescope.extensions.file_browser.file_browser, label("file_browser") },
+				["r"] = { builtin.live_grep, label("live_grep") },
+				[";"] = { builtin.resume, label("resume") },
+				["e"] = { builtin.diagnostics, label("diagnostics") },
+				["b"] = { builtin.buffers, label("buffers") },
+				["B"] = { builtin.builtin, label("builtin") },
+				["i"] = { builtin.lsp_incoming_calls, label("lsp_incoming_calls") },
+				["o"] = { builtin.lsp_outgoing_calls, label("lsp_outgoing_calls") },
+				["d"] = { builtin.lsp_definitions, label("lsp_definitions") },
+				["k"] = { builtin.lsp_references, label("lsp_references") },
+				["t"] = { builtin.lsp_type_definitions, label("lsp_type_definitions") },
+				["g"] = { builtin.lsp_implementations, label("lsp_implementations") },
+				["c"] = { actions.delete_buffer, label("delete_buffer") },
 			},
 		})
 	end,
