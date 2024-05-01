@@ -19,6 +19,15 @@ local M = {
 			azure_api_base_cmd = cmd .. "azure_api_base.fish",
 			azure_api_engine_cmd = cmd .. "azure_api_engine.fish",
 			-- azure_api_version_cmd = "echo 2023-05-15",
+			openai_params = {
+				model = "gpt-3.5-turbo",
+				frequency_penalty = 0,
+				presence_penalty = 0,
+				max_tokens = 4096,
+				temperature = 0,
+				top_p = 1,
+				n = 1,
+			},
 		})
 
 		-- which-key
@@ -40,10 +49,11 @@ local M = {
 		local wk = require("which-key")
 		wk.register({
 			name = name,
-			["g"] = {
+			["C"] = {
 				name = name,
 				mode = { "n", "v" },
 				["c"] = { CMD(name), label(name) },
+				["C"] = { CMD("ChatGPTCompleteCode"), label("ChatGPTCompleteCode"), mode = { "n", "v" } },
 				["e"] = { CMD(ChatGPTEditWithInstruction), label(ChatGPTEditWithInstruction), mode = { "n", "v" } },
 				["g"] = { chatGPTRun(grammar_correction), label(grammar_correction), mode = { "n", "v" } },
 				["t"] = { chatGPTRun(translate), label(translate), mode = { "n", "v" } },
@@ -56,6 +66,7 @@ local M = {
 				["x"] = { chatGPTRun(explainCode), label(explainCode), mode = { "n", "v" } },
 				["r"] = { chatGPTRun(roxygenEdit), label(roxygenEdit), mode = { "n", "v" } },
 				["l"] = { chatGPTRun(code_readability_analysis), label(code_readability_analysis), mode = { "n", "v" } },
+				["A"] = { CMD("ChatGPTActAs"), label("ChatGPTActAs"), mode = { "n", "v" } },
 			},
 		}, { prefix = "<leader>" })
 	end,

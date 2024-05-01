@@ -59,6 +59,7 @@ local M = {
 				["t"] = { builtin.lsp_type_definitions, label("lsp_type_definitions") },
 				["g"] = { builtin.lsp_implementations, label("lsp_implementations") },
 				["c"] = { actions.delete_buffer, label("delete_buffer") },
+				["u"] = { telescope.extensions.undo.undo, label("undo") },
 			},
 		})
 	end,
