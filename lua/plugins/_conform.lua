@@ -6,6 +6,7 @@ local M = {
 	config = function()
 		require("conform").setup({
 			formatters_by_ft = {
+				python = { "isort", "black" },
 				lua = { "stylua" },
 				-- Use a sub-list to run only the first available formatter
 				["_"] = { { "prettierd", "prettier" } },

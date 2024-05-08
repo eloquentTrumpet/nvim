@@ -93,6 +93,22 @@ local M = {
 			end,
 		})
 
+		lspconfig.css_variables.setup({
+			capabilities = cmp_nvim_lsp_capabilities,
+		})
+
+		lspconfig.diagnosticls.setup({
+			capabilities = cmp_nvim_lsp_capabilities,
+		})
+
+		lspconfig.marksman.setup({
+			capabilities = cmp_nvim_lsp_capabilities,
+		})
+
+		lspconfig.jsonls.setup({
+			capabilities = cmp_nvim_lsp_capabilities,
+		})
+
 		require("sonarlint").setup({
 			server = {
 				cmd = {

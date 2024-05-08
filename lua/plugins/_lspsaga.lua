@@ -43,8 +43,10 @@ local default_config = {
 	},
 	code_action = {
 		num_shortcut = true,
-		show_server_name = false,
-		extend_gitsigns = false,
+		-- show_server_name = false,
+		show_server_name = true,
+		-- extend_gitsigns = false,
+		extend_gitsigns = true,
 		only_in_cursor = true,
 		max_height = 0.3,
 		keys = {
@@ -182,14 +184,14 @@ local M = {
 		require("nvim-treesitter")
 		require("lspsaga").setup(default_config)
 
-		local keymap = vim.keymap.set
+		-- local keymap = vim.keymap.set
 		-- Diagnostic jump with filters such as only jumping to an error
-		keymap("n", "[E", function()
-			require("lspsaga.diagnostic"):goto_prev({ severity = vim.diagnostic.severity.ERROR })
-		end)
-		keymap("n", "]E", function()
-			require("lspsaga.diagnostic"):goto_next({ severity = vim.diagnostic.severity.ERROR })
-		end)
+		-- keymap("n", "[E", function()
+		-- 	require("lspsaga.diagnostic"):goto_prev({ severity = vim.diagnostic.severity.ERROR })
+		-- end)
+		-- keymap("n", "]E", function()
+		-- 	require("lspsaga.diagnostic"):goto_next({ severity = vim.diagnostic.severity.ERROR })
+		-- end)
 
 		-- which-key
 		local name = "Lspsaga"
@@ -223,6 +225,11 @@ local M = {
 				["R"] = { lspSaga(rename_project), label(rename_project) },
 				["p"] = { lspSaga(peek_definition), label(peek_definition) },
 				["d"] = { lspSaga(goto_definition), label(goto_definition) },
+				["D"] = {
+					name = label("Diagnostic"),
+					["j"] = { lspSaga("diagnostic_jump_next"), label("diagnostic_jump_next") },
+					["k"] = { lspSaga("diagnostic_jump_prev"), label("diagnostic_jump_prev") },
+				},
 				["t"] = { lspSaga(peek_type_definition), label(peek_type_definition) },
 				["T"] = { lspSaga(goto_type_definition), label(goto_type_definition) },
 				["K"] = { lspSaga(hover_doc), label(hover_doc) },
@@ -250,8 +257,8 @@ local M = {
 				["w"] = { lspSaga(show_workspace_diagnostics), label(show_workspace_diagnostics) },
 				["c"] = { lspSaga(show_cursor_diagnostics), label(show_cursor_diagnostics) },
 			},
-			["[e"] = { lspSaga(diagnostic_jump_prev), label(diagnostic_jump_prev) },
-			["e]"] = { lspSaga(diagnostic_jump_next), label(diagnostic_jump_next) },
+			["[E"] = { lspSaga(diagnostic_jump_prev), label(diagnostic_jump_prev) },
+			["E]"] = { lspSaga(diagnostic_jump_next), label(diagnostic_jump_next) },
 		})
 	end,
 }
