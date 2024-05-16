@@ -48,7 +48,6 @@ local M = {
 		local label = LABEL(name)
 		local wk = require("which-key")
 		wk.register({
-			name = name,
 			["C"] = {
 				name = name,
 				mode = { "n", "v" },

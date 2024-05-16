@@ -16,7 +16,6 @@ local M = {
 		local label = LABEL(name)
 		local wk = require("which-key")
 		wk.register({
-			name = name,
 			["f"] = {
 				name = name,
 				["b"] = { CMD(gitBlame), label(gitBlame) },

@@ -22,7 +22,7 @@ local M = {
 		"hrsh7th/cmp-vsnip",
 		"hrsh7th/vim-vsnip",
 
-		"https://gitlab.com/schrieveslaach/sonarlint.nvim",
+		-- "https://gitlab.com/schrieveslaach/sonarlint.nvim",
 	},
 	config = function()
 		require("mason").setup()
@@ -32,27 +32,33 @@ local M = {
 		-- Setup language servers.
 		local lspconfig = require("lspconfig")
 		-- The nvim-cmp almost supports LSP's capabilities so You should advertise it to LSP servers..
-		local cmp_nvim_lsp_capabilities = require("cmp_nvim_lsp").default_capabilities()
+		local cmp_nvim_lsp = require("cmp_nvim_lsp")
+
+		local workspace_diagnostics = require("workspace-diagnostics")
 
 		-- typescript-language-server
 		lspconfig.tsserver.setup({
-			capabilities = cmp_nvim_lsp_capabilities,
+			capabilities = cmp_nvim_lsp.default_capabilities(),
+			-- diagnostics for all files
+			on_attach = function(client, bufnr)
+				workspace_diagnostics.populate_workspace_diagnostics(client, bufnr)
+			end,
 		})
 
 		-- vscode-eslint-language-server (hrsh7th/vscode-langservers-extracted)
 		lspconfig.eslint.setup({
-			capabilities = cmp_nvim_lsp_capabilities,
+			capabilities = cmp_nvim_lsp.default_capabilities(),
 		})
 
 		-- css-languageserver (hrsh7th/vscode-langservers-extracted)
 		lspconfig.cssls.setup({
-			capabilities = cmp_nvim_lsp_capabilities,
+			capabilities = cmp_nvim_lsp.default_capabilities(),
 		})
 
 		-- cssmodules_ls
 		-- npm install --global cssmodules-language-server
 		lspconfig.cssmodules_ls.setup({
-			capabilities = cmp_nvim_lsp_capabilities,
+			capabilities = cmp_nvim_lsp.default_capabilities(),
 			on_attach = function(client)
 				-- avoid accepting `definitionProvider` responses from this LSP
 				client.server_capabilities.definitionProvider = false
@@ -62,7 +68,7 @@ local M = {
 
 		-- luals/lua-language-server
 		lspconfig.lua_ls.setup({
-			capabilities = cmp_nvim_lsp_capabilities,
+			capabilities = cmp_nvim_lsp.default_capabilities(),
 			on_init = function(client)
 				local path = client.workspace_folders[1].name
 				if not vim.loop.fs_stat(path .. "/.luarc.json") and not vim.loop.fs_stat(path .. "/.luarc.jsonc") then
@@ -91,51 +97,26 @@ local M = {
 				end
 				return true
 			end,
+			-- diagnostics for all files
+			on_attach = function(client, bufnr)
+				workspace_diagnostics.populate_workspace_diagnostics(client, bufnr)
+			end,
 		})
 
 		lspconfig.css_variables.setup({
-			capabilities = cmp_nvim_lsp_capabilities,
+			capabilities = cmp_nvim_lsp.default_capabilities(),
 		})
 
 		lspconfig.diagnosticls.setup({
-			capabilities = cmp_nvim_lsp_capabilities,
+			capabilities = cmp_nvim_lsp.default_capabilities(),
 		})
 
 		lspconfig.marksman.setup({
-			capabilities = cmp_nvim_lsp_capabilities,
+			capabilities = cmp_nvim_lsp.default_capabilities(),
 		})
 
 		lspconfig.jsonls.setup({
-			capabilities = cmp_nvim_lsp_capabilities,
-		})
-
-		require("sonarlint").setup({
-			server = {
-				cmd = {
-					"sonarlint-language-server",
-					-- Ensure that sonarlint-language-server uses stdio channel
-					"-stdio",
-					"-analyzers",
-					-- paths to the analyzers you need, using those for python and java in this example
-					vim.fn.expand("~/.local/share/nvim/mason/share/sonarlint-analyzers/sonarcfamily.jar"),
-					vim.fn.expand("~/.local/share/nvim/mason/share/sonarlint-analyzers/sonarjs.jar"),
-					vim.fn.expand("~/.local/share/nvim/mason/share/sonarlint-analyzers/sonartext.jar"),
-				},
-			},
-			filetypes = {
-				"javascript",
-				"javascriptreact",
-				"javascript.jsx",
-				"typescript",
-				"typescriptreact",
-				"typescript.tsx",
-				"python",
-				"cpp",
-				"java",
-				"css",
-				"scss",
-				"tsx",
-			},
+			capabilities = cmp_nvim_lsp.default_capabilities(),
 		})
 
 		-- cmp

@@ -31,7 +31,6 @@ local M = {
 		local label = LABEL(name)
 		local wk = require("which-key")
 		wk.register({
-			name = name,
 			["n"] = {
 				name = name,
 				["r"] = { cmd("run"), label("Run the nearest test") },

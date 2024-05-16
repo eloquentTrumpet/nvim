@@ -14,7 +14,6 @@ local M = {
 		local label = LABEL(name)
 		local wk = require("which-key")
 		wk.register({
-			name = name,
 			["u"] = { CMD(undotreeToggle), label(undotreeToggle) },
 		}, { prefix = "<leader>" })
 	end,

@@ -208,6 +208,12 @@ local M = {
 		local outline = "outline"
 		local incoming_calls = "incoming_calls"
 		local outgoing_calls = "outgoing_calls"
+		local show_line_diagnostics = "show_line_diagnostics"
+		local show_buf_diagnostics = "show_buf_diagnostics"
+		local show_workspace_diagnostics = "show_workspace_diagnostics"
+		local show_cursor_diagnostics = "show_cursor_diagnostics"
+		local diagnostic_jump_prev = "diagnostic_jump_prev"
+		local diagnostic_jump_next = "diagnostic_jump_next"
 		local lspSaga = CMD_FUNC(name)
 		local label = LABEL(name)
 		local wk = require("which-key")
@@ -225,11 +231,6 @@ local M = {
 				["R"] = { lspSaga(rename_project), label(rename_project) },
 				["p"] = { lspSaga(peek_definition), label(peek_definition) },
 				["d"] = { lspSaga(goto_definition), label(goto_definition) },
-				["D"] = {
-					name = label("Diagnostic"),
-					["j"] = { lspSaga("diagnostic_jump_next"), label("diagnostic_jump_next") },
-					["k"] = { lspSaga("diagnostic_jump_prev"), label("diagnostic_jump_prev") },
-				},
 				["t"] = { lspSaga(peek_type_definition), label(peek_type_definition) },
 				["T"] = { lspSaga(goto_type_definition), label(goto_type_definition) },
 				["K"] = { lspSaga(hover_doc), label(hover_doc) },
@@ -239,26 +240,16 @@ local M = {
 					["i"] = { lspSaga(incoming_calls), label(incoming_calls) },
 					["o"] = { lspSaga(outgoing_calls), label(outgoing_calls) },
 				},
+				["s"] = {
+					name = label("Diagnostics"),
+					["l"] = { lspSaga(show_line_diagnostics), label(show_line_diagnostics) },
+					["b"] = { lspSaga(show_buf_diagnostics), label(show_buf_diagnostics) },
+					["w"] = { lspSaga(show_workspace_diagnostics), label(show_workspace_diagnostics) },
+					["c"] = { lspSaga(show_cursor_diagnostics), label(show_cursor_diagnostics) },
+					["k"] = { lspSaga(diagnostic_jump_prev), label(diagnostic_jump_prev) },
+					["j"] = { lspSaga(diagnostic_jump_next), label(diagnostic_jump_next) },
+				},
 			},
-			-- },
-		})
-
-		local show_line_diagnostics = "show_line_diagnostics"
-		local show_buf_diagnostics = "show_buf_diagnostics"
-		local show_workspace_diagnostics = "show_workspace_diagnostics"
-		local show_cursor_diagnostics = "show_cursor_diagnostics"
-		local diagnostic_jump_prev = "diagnostic_jump_prev"
-		local diagnostic_jump_next = "diagnostic_jump_next"
-		wk.register({
-			["s"] = {
-				name = label("Diagnostics"),
-				["l"] = { lspSaga(show_line_diagnostics), label(show_line_diagnostics) },
-				["b"] = { lspSaga(show_buf_diagnostics), label(show_buf_diagnostics) },
-				["w"] = { lspSaga(show_workspace_diagnostics), label(show_workspace_diagnostics) },
-				["c"] = { lspSaga(show_cursor_diagnostics), label(show_cursor_diagnostics) },
-			},
-			["[E"] = { lspSaga(diagnostic_jump_prev), label(diagnostic_jump_prev) },
-			["E]"] = { lspSaga(diagnostic_jump_next), label(diagnostic_jump_next) },
 		})
 	end,
 }
