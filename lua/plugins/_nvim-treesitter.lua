@@ -7,9 +7,9 @@ local config = {
 	indent = {
 		enable = true,
 	},
-	autotag = {
-		enable = true,
-	},
+	-- autotag = {
+	-- 	enable = true,
+	-- },
 	ensure_installed = {
 		-- 'bash',
 		-- 'comment',
